@@ -1,18 +1,15 @@
-import './globals.css'
+import RootStyleEmotionRegistry from './EmotionRootStyle'
+import '@/src/styles/globals.css'
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({children,}: {children: React.ReactNode}) {
   return (
-    <html lang="en">
-      {/*
-        <head /> will contain the components returned by the nearest parent
-        head.tsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
-      */}
+    <html lang="es">
       <head />
-      <body>{children}</body>
-    </html>
+        <body>
+          <RootStyleEmotionRegistry>
+            {children}
+          </RootStyleEmotionRegistry>
+        </body>
+      </html>
   )
 }
