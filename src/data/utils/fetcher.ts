@@ -12,8 +12,8 @@ import Router from 'next/router';
         PUT: 'PUT'
     } 
 
-    const roleHeaderOptions = (custom_hdrs?:any) => {
-        return {"Content-Type": "application/json; charset=UTF-8", ...custom_hdrs};
+    const roleHeaderOptions = (custom_headers?:any) => {
+        return {"Content-Type": "application/json; charset=UTF-8", ...custom_headers};
     }
 
     const handleAuthResponse = (response: Response, url?: string | undefined) => {

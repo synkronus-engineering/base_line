@@ -17,6 +17,6 @@ export const fontFamily = [
 export const typography = {
   fontSize,
   fontFamily,
-  htmlFontSize: 26,
+  htmlFontSize: 16,
   body: { fontSize },
 };
