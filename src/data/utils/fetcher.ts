@@ -16,7 +16,7 @@ import Router from 'next/router';
         return {"Content-Type": "application/json; charset=UTF-8", ...custom_hdrs};
     }
 
-    const handleAuthResponse = (response, url?) => {
+    const handleAuthResponse = (response: Response, url?: string | undefined) => {
         return response.text().then(text => {
             const data = text && JSON.parse(text);
             if (!response.ok) {
@@ -33,7 +33,7 @@ import Router from 'next/router';
     } 
 
   
-    export const simpleFetcher = (...args) => {
+    export const simpleFetcher = (...args: { headers: any; }[]) => {
         args[1] = { headers: roleHeaderOptions() };
         return fetch(...args as [any]).then((rsp) => handleAuthResponse(rsp));
     };
