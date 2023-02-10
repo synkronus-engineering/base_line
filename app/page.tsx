@@ -1,91 +1,74 @@
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
-import styles from '@/src/styles/page.module.css'
+'use client';
+import { useEffect } from 'react';
+import { Auth, ThemeSupa } from '@supabase/auth-ui-react'
+import {  useUser, useSupabaseClient, } from '@supabase/auth-helpers-react';
+import { Box, Grid } from '@mui/material';
+import { useRouter } from 'next/navigation';
 
-const inter = Inter({ subsets: ['latin'] })
+const LoginPage = () => {
+  const user = useUser();
+  const supabaseClient = useSupabaseClient();
+  const router = useRouter();
 
-export default function Home() {
+  useEffect(() => {
+    if (user) router.push("/todos");
+  }, [user]);
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-        <div className={styles.thirteen}>
-          <Image src="/thirteen.svg" alt="13" width={40} height={31} priority />
-        </div>
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://beta.nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    <Grid container 
+      direction="row"
+      justifyContent="center"
+      alignItems="center"
+    >
+      <Grid item sm={4} xs={12}>
+        <Box sx={{mt:'50%'}}>
+          <Auth
+            supabaseClient={supabaseClient}
+            redirectTo="/todos"
+            appearance={{ theme: ThemeSupa }}
+            theme="default"            
+            providers={['google']}
+            socialLayout="horizontal"
+            localization={{variables: {...authOptionCfg}}}
+          />
+        </Box>
+      </Grid>
+    </Grid>
   )
+};
+
+const authOptionCfg = {
+  "sign_up": {
+    "email_label": "Email",
+    "password_label": "Crear Contraseña",
+    "button_label": "Registrarse",
+    "social_provider_text": "Ingresar con",
+    "link_text": "No Tienes Cuenta? Registrate"
+  },
+  "sign_in": {
+    "email_label": "Email",
+    "password_label": "Contraseña",
+    "button_label": "Ingresar",
+    "social_provider_text": "Ingresar con",
+    "link_text": "Tienes Cuenta? Ingresa!"
+  },
+  "magic_link": {
+    "email_input_label": "Email address",
+    "email_input_placeholder": "Your email address",
+    "button_label": "Enviar Magic Link",
+    "link_text": "Enviar a magic link email"
+  },
+  "forgotten_password": {
+    "email_label": "Email",
+    "password_label": "Contraseña",
+    "button_label": "Enviar instrucciones",
+    "link_text": "Olvidé la contraseña?"
+  },
+  "update_password": {
+    "password_label": "Nueva contraseña",
+    "password_input_placeholder": "Nueva contraseña",
+    "button_label": "Actualizar contraseña"
+  }
 }
+
+export default LoginPage;

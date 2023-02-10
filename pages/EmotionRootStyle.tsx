@@ -8,7 +8,7 @@ import MuiTheme from '@/src/theme/MUITheme';
 
 export default function RootStyleEmotionRegistry({children}: {children: React.ReactNode}) {
   const [{ cache, flush }] = useState(() => {
-    const cache = createCache({ key: 'css' });
+    const cache = createCache({ key: 'css-emotion' });
     cache.compat = true;
     const prevInsert = cache.insert;
     let inserted: string[] = [];
@@ -31,17 +31,8 @@ export default function RootStyleEmotionRegistry({children}: {children: React.Re
     const names = flush();
     if (names.length === 0) return null;
     let styles = '';
-    for (const name of names) {
-      styles += cache.inserted[name];
-    }
-    return (
-      <style
-        data-emotion={`${cache.key} ${names.join(' ')}`}
-        dangerouslySetInnerHTML={{
-          __html: styles,
-        }}
-      />
-    );
+    for (const name of names) {styles += cache.inserted[name];}
+    return (<style data-emotion={`${cache.key} ${names.join(' ')}`} dangerouslySetInnerHTML={{__html: styles,}} />);
   });
 
   return (

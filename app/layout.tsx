@@ -1,15 +1,33 @@
-import RootStyleEmotionRegistry from './EmotionRootStyle'
-import '@/src/styles/globals.css'
+"use client";
+import React, { ReactNode }from 'react';
+import AppProviders from '@/pages/AppProviders';
+import RootStyleEmotionRegistry from '@/pages/EmotionRootStyle';
+import { Open_Sans } from "@next/font/google";
 
-export default function RootLayout({children,}: {children: React.ReactNode}) {
+const inter = Open_Sans({
+  subsets: ["latin"],
+  display:'swap',
+  weight: ['400', '600','700','800'],
+});
+
+type WrapperProps = {children: ReactNode};
+
+const RootLayout = ({children}: WrapperProps) => {
   return (
-    <html lang="es">
-      <head />
-        <body>
+    <html lang="es" className={inter.className}>
+    <head />
+      <body>
+        <AppProviders>
           <RootStyleEmotionRegistry>
-            {children}
+              {children}
           </RootStyleEmotionRegistry>
-        </body>
-      </html>
+        </AppProviders>
+      </body>
+    </html>
   )
 }
+
+export default RootLayout
+
+
+
