@@ -107,33 +107,6 @@ export const blue = {
   contrastText: "#FFFFFF",
 };
 
-export const marron = {
-  50: "#f3f5f9",
-  100: "#F6F2ED",
-  200: "#F8DBD1",
-  300: "#EBBCB3",
-  400: "#D89C98",
-  600: "#A3545C",
-  700: "#883948",
-  800: "#6E2438",
-  900: "#5B162F",
-  main: "#BE7374",
-};
-
-export const paste = {
-  50: "#F5F5F5",
-  100: "#DDFBF1",
-  200: "#BDF7E8",
-  300: "#97E8DA",
-  400: "#76D2CA",
-  600: "#36929A",
-  700: "#257181",
-  800: "#175368",
-  900: "#0E3D56",
-  main: "#4BB4B4",
-  contrastText: "#FFFFFF",
-};
-
 export const warning = {
   100: "#FFF8E5",
   main: "#FFCD4E",
@@ -146,9 +119,7 @@ export const white = { main: "#fff" };
 export const themeColors = {
   dark,
   grey,
-  paste,
   error,
-  marron,
   warning,
   success,
   secondary,

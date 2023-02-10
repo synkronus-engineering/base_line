@@ -5,8 +5,7 @@ import { fontFamily, fontSize } from "./typography";
 declare module "@mui/material/Button" {
   interface ButtonPropsColorOverrides {
     dark: true;
-    paste: true;
-    marron: true;
+    grey: true;
   }
 
   interface ButtonPropsSizeOverrides {
