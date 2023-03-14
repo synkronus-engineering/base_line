@@ -1,3 +1,4 @@
+"use client";
 import  React, { ReactNode, useState} from 'react';
 import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
 import { SessionContextProvider, Session } from '@supabase/auth-helpers-react'
@@ -18,4 +19,4 @@ const  AppProviders = ({ children }: WrapperProps) => {
   
 }
 
-export default AppProviders
+export default AppProviders;

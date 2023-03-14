@@ -1,4 +1,3 @@
-"use client";
 import React, { ReactNode, StrictMode }from 'react';
 import AppProviders from '@/src/providers/AppProviders';
 import { Open_Sans } from "next/font/google";
@@ -18,8 +17,9 @@ const RootLayout = ({children}: WrapperProps) => {
       <html lang="es" className={inter.className} key="root">
         <head />
       </html>
-      <RootStyleEmotionRegistry>
+      <RootStyleEmotionRegistry key="theme-provider">
         <html lang="es" className={inter.className} key="root">
+          <head />
           <body>
             <AppProviders>
                   {children}
