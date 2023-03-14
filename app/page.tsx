@@ -1,6 +1,8 @@
 'use client';
+/** @jsxImportSource @emotion/react */
 import { useEffect } from 'react';
-import { Auth, ThemeSupa } from '@supabase/auth-ui-react'
+import { Auth } from '@supabase/auth-ui-react';
+import { ThemeSupa, } from '@supabase/auth-ui-shared';
 import {  useUser, useSupabaseClient, } from '@supabase/auth-helpers-react';
 import { Box, Grid } from '@mui/material';
 import { useRouter } from 'next/navigation';

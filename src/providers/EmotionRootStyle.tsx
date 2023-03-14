@@ -3,7 +3,7 @@ import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';
 import { useServerInsertedHTML } from 'next/navigation';
 import { useState } from 'react';
-import MuiTheme from '@/src/theme/MUITheme';
+import MuiTheme from '@/src/styles/theme/MUITheme';
 
 
 export default function RootStyleEmotionRegistry({children}: {children: React.ReactNode}) {

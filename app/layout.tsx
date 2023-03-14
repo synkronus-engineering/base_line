@@ -1,8 +1,8 @@
 "use client";
-import React, { ReactNode }from 'react';
-import AppProviders from '@/pages/AppProviders';
-import RootStyleEmotionRegistry from '@/pages/EmotionRootStyle';
-import { Open_Sans } from "@next/font/google";
+import React, { ReactNode, StrictMode }from 'react';
+import AppProviders from '@/src/providers/AppProviders';
+import { Open_Sans } from "next/font/google";
+import RootStyleEmotionRegistry from '@/src/providers/EmotionRootStyle';
 
 const inter = Open_Sans({
   subsets: ["latin"],
@@ -14,16 +14,20 @@ type WrapperProps = {children: ReactNode};
 
 const RootLayout = ({children}: WrapperProps) => {
   return (
-    <html lang="es" className={inter.className}>
-    <head />
-      <body>
-        <AppProviders>
-          <RootStyleEmotionRegistry>
-              {children}
-          </RootStyleEmotionRegistry>
-        </AppProviders>
-      </body>
-    </html>
+    <StrictMode>
+      <html lang="es" className={inter.className} key="root">
+        <head />
+      </html>
+      <RootStyleEmotionRegistry>
+        <html lang="es" className={inter.className} key="root">
+          <body>
+            <AppProviders>
+                  {children}
+            </AppProviders>
+          </body>
+        </html>
+      </RootStyleEmotionRegistry>
+    </StrictMode>
   )
 }
 

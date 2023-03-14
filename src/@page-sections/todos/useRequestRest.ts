@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useTodoListData, todoMutations, todoData } from "@/src/data/todos/todos_api";
-import { toggleDialog } from '@/src/@pages-sections/todos/FormDialog';
+import { toggleDialog } from '@/src/@page-sections/todos/FormDialog';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { toggleSnackBar } from '@/src/components/snackbar/SnackbarApp';
 import { toggleConfirmDialog } from "@/src/components/dialog/ConfirmDialog";

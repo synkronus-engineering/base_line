@@ -1,3 +1,4 @@
+"use client";
 import { CssBaseline } from "@mui/material";
 import { createTheme, responsiveFontSizes, ThemeProvider } from "@mui/material/styles";
 import { FC, ReactNode } from "react";
@@ -15,7 +16,7 @@ const MuiTheme: FC<MuiThemeProps> = ({ children }) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
+      <CssBaseline key="css-baseline" />
       {children}
     </ThemeProvider>
   );

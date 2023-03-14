@@ -2,7 +2,7 @@
 import React, { ReactNode }from 'react';
 import Container from '@mui/material/Container';
 import Header from '@/src/components/header'
-import { FormDialog } from '@/src/@pages-sections/todos/FormDialog';
+import { FormDialog } from '@/src/@page-sections/todos/FormDialog';
 import { SnackbarApp } from '@/src/components/snackbar/SnackbarApp';
 import { ConfirmDialog } from '@/src/components/dialog/ConfirmDialog';
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
