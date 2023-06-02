@@ -1,7 +1,12 @@
+"use client"
 import React, { ReactNode, StrictMode }from 'react';
 import AppProviders from '@/src/providers/AppProviders';
 import { Open_Sans } from "next/font/google";
 import RootStyleEmotionRegistry from '@/src/providers/EmotionRootStyle';
+import Header from '@/src/components/header'
+import AppFooter from '@/src/components/footer'
+import { useSupabaseClient } from '@supabase/auth-helpers-react'
+import { useRouter } from 'next/navigation';
 
 const inter = Open_Sans({
   subsets: ["latin"],
@@ -12,6 +17,17 @@ const inter = Open_Sans({
 type WrapperProps = {children: ReactNode};
 
 const RootLayout = ({children}: WrapperProps) => {
+
+  const supabaseClient = useSupabaseClient();
+  const router = useRouter();
+
+  const menus =  [
+      {
+        title: 'Logout',
+        clickHandle: () => supabaseClient.auth.signOut().then(() => router.push('/')),
+      }
+  ];
+
   return (
     <StrictMode>
       <html lang="es" className={inter.className} key="root">
@@ -22,7 +38,9 @@ const RootLayout = ({children}: WrapperProps) => {
           <head />
           <body>
             <AppProviders>
-                  {children}
+              <Header menus={menus}/>
+                {children}
+              {/* <AppFooter /> */}
             </AppProviders>
           </body>
         </html>
