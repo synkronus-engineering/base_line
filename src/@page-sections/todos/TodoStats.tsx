@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Card, CardContent, CardHeader, Grid } from '@mui/material';
 import { useRecoilValue } from 'recoil';
-import { getTodoStats } from '@/src/data/todos/todos_api';
+import { getTodoStats } from '@/src/data/todos_api';
 
 const TodoStats = () => {
   const stats = useRecoilValue(getTodoStats);

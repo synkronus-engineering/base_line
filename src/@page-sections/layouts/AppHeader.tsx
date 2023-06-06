@@ -1,30 +1,46 @@
 "use client"
-import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-// import Button from '@mui/material/Button';
-import MenuType from '@/src/data/types/MenuType';
 import Stack from '@mui/material/Stack';
 import Link from '@mui/material/Link';
-
+import { useRouter } from 'next/navigation';
+import { useSupabaseApp } from '@/src/providers/SupabaseProvider';
+import { userGlobalSession } from '@/src/context/appContext';
+import { has } from 'lodash';
+import { useRecoilValue } from 'recoil';
+import { Button } from '@mui/material';
+import HasMounted from '@/src/lib/HasMounted';
 
 const rightLink = {
-  fontSize: 12,
+  fontSize: 10,
   color: 'common.white',
   ml: 3,
 };
 
-type HeaderProps = {menus?: Array<MenuType>};
 
-const Header = ({menus = []}: HeaderProps) => {
+const AppHeader = () => {
+
+  const { supabase } = useSupabaseApp();
+  const router = useRouter();
+  const userGlobal = useRecoilValue(userGlobalSession);
+
+
+  const handleSession = async () => {
+    if (userGlobal && has(userGlobal, 'user')) {
+     await  supabase.auth.signOut().then(() => router.push('/'));
+    } else {
+      router.push("/login")
+    }     
+  }
+
   return (
     <AppBar position="fixed" color="transparent"
       sx = {{
         backgroundColor: '#fff',
         boxShadow: '0px 0px 15px 0px rgb(0 0 0 / 10%)',
+        zIndex: (theme) => theme.zIndex.drawer + 1
       }}
     >
       <Container maxWidth="xl">
@@ -34,7 +50,7 @@ const Header = ({menus = []}: HeaderProps) => {
           }}
         >
           <Stack direction="row" spacing={2}>
-          <Link
+            <Link
               color="main"
               variant="h6"
               underline="none"
@@ -52,32 +68,31 @@ const Header = ({menus = []}: HeaderProps) => {
             >
               {'ToDo'}
             </Link>
-          </Stack>
-
-          <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
             <Link
               color="main"
               variant="h6"
               underline="none"
-              href="/login"
+              href="/features/"
               sx={{...rightLink, color: 'main' }}
             >
-              {'Sign In'}
+              {'New Features'}
             </Link>
-            {/* <Link
+          </Stack>
+
+          {/* <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
+            <Link
+              color="main"
               variant="h6"
               underline="none"
-              href="/logout"
-              sx={{ ...rightLink, color: 'main' }}
+              sx={{...rightLink, color: 'main' }}
+              onClick={() => handleSession()}
             >
-              {'Sign Up'}
-            </Link> */}
-          </Box>
+              {(userGlobal && has(userGlobal, 'user')) ? 'Sign Out' : 'Sign In'}
+            </Link>
 
-          {/* <Box sx={{ flexGrow: 1, justifyContent: 'flex-end', display: 'flex'}} data-testid="menu">
-            {menus.map((menu, index) => (
+          </Box> */}
+          <Box sx={{ flexGrow: 1, justifyContent: 'flex-end', display: 'flex'}} data-testid="menu">
               <Button
-                key={index}
                 sx={{ 
                   display: 'block', 
                   pl: 2, 
@@ -85,15 +100,16 @@ const Header = ({menus = []}: HeaderProps) => {
                   textTransform: 'none',
                   fontSize: '1.12rem',
                 }}
-                onClick={menu.clickHandle}
+                onClick={() => handleSession()}
               >
-                {menu.title}
+                <HasMounted fallback={'Sign In'}>
+                  {(userGlobal && has(userGlobal, 'user')) ? 'Sign Out' : 'Sign In'}
+                </HasMounted>
               </Button>
-            ))}
-          </Box> */}
+          </Box>
         </Toolbar>        
       </Container>
     </AppBar>
   );
 };
-export default Header;
+export default AppHeader;

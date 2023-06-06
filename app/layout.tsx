@@ -3,10 +3,10 @@ import React, { ReactNode, StrictMode }from 'react';
 import AppProviders from '@/src/providers/AppProviders';
 import { Open_Sans } from "next/font/google";
 import RootStyleEmotionRegistry from '@/src/providers/EmotionRootStyle';
-import Header from '@/src/components/header'
-import AppFooter from '@/src/components/footer'
-import { useSupabaseClient } from '@supabase/auth-helpers-react'
-import { useRouter } from 'next/navigation';
+import { createSupaClientComponent } from '@/src/lib/supabase';
+import SupabaseListener from '@/src/providers/SupabaseListener';
+import SupabaseProvider from '@/src/providers/SupabaseProvider';
+import AppHeader from '@/src/@page-sections/layouts/AppHeader';
 
 const inter = Open_Sans({
   subsets: ["latin"],
@@ -16,36 +16,25 @@ const inter = Open_Sans({
 
 type WrapperProps = {children: ReactNode};
 
-const RootLayout = ({children}: WrapperProps) => {
-
-  const supabaseClient = useSupabaseClient();
-  const router = useRouter();
-
-  const menus =  [
-      {
-        title: 'Logout',
-        clickHandle: () => supabaseClient.auth.signOut().then(() => router.push('/')),
-      }
-  ];
+const RootLayout = async ({children}: WrapperProps) => {
+  const supabase = createSupaClientComponent();
+  const { data: { session },   } = await supabase.auth.getSession();
 
   return (
-    <StrictMode>
       <html lang="es" className={inter.className} key="root">
         <head />
+        <body>
+        <RootStyleEmotionRegistry key="theme-provider">
+          <AppProviders>
+            <SupabaseProvider session={session}>
+            <SupabaseListener />  
+              <AppHeader/>
+              {children}
+            </SupabaseProvider>
+          </AppProviders>
+        </RootStyleEmotionRegistry>
+        </body>
       </html>
-      <RootStyleEmotionRegistry key="theme-provider">
-        <html lang="es" className={inter.className} key="root">
-          <head />
-          <body>
-            <AppProviders>
-              <Header menus={menus}/>
-                {children}
-              {/* <AppFooter /> */}
-            </AppProviders>
-          </body>
-        </html>
-      </RootStyleEmotionRegistry>
-    </StrictMode>
   )
 }
 

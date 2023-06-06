@@ -120,10 +120,11 @@ export const themeColors = {
   dark,
   grey,
   error,
+  info: blue,
   warning,
   success,
+  primary,
   secondary,
-  info: blue,
   divider: grey[200],
   background: { 
     default: white,

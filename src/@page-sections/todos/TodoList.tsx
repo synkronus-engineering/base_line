@@ -1,4 +1,4 @@
-import React from 'react';
+"use client"
 import useRequestRest from '@/src/@page-sections/todos/useRequestRest';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -29,7 +29,6 @@ const TodoList = () => {
           <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
             {map(orderBy(todos?.data, 'inserted_at', 'desc'), (item) => {
               const labelId = `checkbox-list-label-${item.id}`;
-
               return (
                 <ListItem
                   key={item.id}
@@ -47,7 +46,7 @@ const TodoList = () => {
                         checked={item.is_complete}
                         tabIndex={-1}
                         disableRipple
-                        inputProps={{ 'aria-labelledby': labelId }}
+                        // inputProps={{ 'aria-labelledby': labelId }}
                         onClick={() => handleAction(item, 'is_done')}
                       />
                     </ListItemIcon>

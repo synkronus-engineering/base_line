@@ -1,22 +1,11 @@
-"use client";
-import  React, { ReactNode, useState} from 'react';
-import { createPagesBrowserClient } from '@supabase/auth-helpers-nextjs'
-import { SessionContextProvider, Session } from '@supabase/auth-helpers-react'
+'use client';
+import { ReactNode } from 'react';
 import { RecoilRoot } from 'recoil';
 
-type WrapperProps = {children: ReactNode};
+type WrapperProps = { children: ReactNode };
 
-const  AppProviders = ({ children }: WrapperProps) => {
-  const [supabaseClient] = useState(() => createPagesBrowserClient());
-
-  return (
-    <RecoilRoot>
-      <SessionContextProvider supabaseClient={supabaseClient}  >
-          {children}
-      </SessionContextProvider>
-    </RecoilRoot>
-  )
-  
-}
+const AppProviders = ({ children }: WrapperProps) => {
+  return <RecoilRoot> {children} </RecoilRoot>;
+};
 
 export default AppProviders;

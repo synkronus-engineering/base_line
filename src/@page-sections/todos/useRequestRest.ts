@@ -1,9 +1,11 @@
 import { useEffect } from "react";
-import { useTodoListData, todoMutations, todoData } from "@/src/data/todos/todos_api";
+import { useTodoListData, todoMutations, todoData } from "@/src/data/todos_api";
 import { toggleDialog } from '@/src/@page-sections/todos/FormDialog';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { toggleSnackBar } from '@/src/components/snackbar/SnackbarApp';
 import { toggleConfirmDialog } from "@/src/components/dialog/ConfirmDialog";
+import { REST_VERBS } from "@/src/lib/res_definitions";
+import { get } from "lodash";
 
 
 function useRequestRest() {
@@ -20,20 +22,20 @@ function useRequestRest() {
           setConfirmDialogState({show:true, action: false, data:item});
         break;
       case 'confirm_delete':
-          const {data:dtDeleteTodo, error:errDeleteTodo} = await todoMutations('delete', {id: item.id });
+          const {data:dtDeleteTodo, error:errDeleteTodo} = await todoMutations(REST_VERBS.DELETE, {id: item.id });
           if(dtDeleteTodo && !errDeleteTodo) {
             setConfirmDialogState({show:false, action: false, data:null})
             setSnackbarState({show:true, msg:'Success'})
           }
         break;
       case 'is_done':
-          const {data:dtIsDoneTodo, error:errIsDoneTodo} = await todoMutations('is_done', {is_complete: !item.is_complete, id: item.id });
+          const {data:dtIsDoneTodo, error:errIsDoneTodo} = await todoMutations(REST_VERBS.PUT, {is_complete: !item.is_complete, id: item.id });
           if(dtIsDoneTodo && !errIsDoneTodo) {
             setSnackbarState({show:true, msg:'Success'})
           }
         break;
       case 'save':
-          const {data:dtCompleteTodo, error:errCompleteTodo} = await todoMutations('add', item);
+          const {data:dtCompleteTodo, error:errCompleteTodo} = await todoMutations(REST_VERBS.POST, item);
           if(dtCompleteTodo && !errCompleteTodo) {
             setDialogState({show:false, formValue:null, action:''});
             setSnackbarState({show:true, msg:'Success'})
@@ -48,7 +50,7 @@ function useRequestRest() {
   useEffect(() => {
     (() => {
       if((data?.data || []).length > 0) 
-        setTodoListDt(data.data);
+        setTodoListDt(get(data, 'data', []));
     })()
   },[data])
 

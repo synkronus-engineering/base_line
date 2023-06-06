@@ -1,20 +1,11 @@
 'use client';
-/** @jsxImportSource @emotion/react */
-import { useEffect } from 'react';
 import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa, } from '@supabase/auth-ui-shared';
-import {  useUser, useSupabaseClient, } from '@supabase/auth-helpers-react';
 import { Box, Grid } from '@mui/material';
-import { useRouter } from 'next/navigation';
+import { useSupabaseApp } from '@/src/providers/SupabaseProvider';
 
 const LoginPage = () => {
-  const user = useUser();
-  const supabaseClient = useSupabaseClient();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (user) router.push("/todos");
-  }, [user]);
+  const { supabase } = useSupabaseApp();
 
   return (
     <Grid container 
@@ -25,8 +16,7 @@ const LoginPage = () => {
       <Grid item sm={4} xs={12}>
         <Box sx={{mt:'50%'}}>
           <Auth
-            supabaseClient={supabaseClient}
-            redirectTo="/todos"
+            supabaseClient={supabase}
             appearance={{ theme: ThemeSupa }}
             theme="default"            
             providers={[]}

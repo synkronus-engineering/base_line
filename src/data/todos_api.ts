@@ -2,9 +2,11 @@ import useSWR from "swr";
 import { genericFnMutateFetcher, REST_VERBS, simpleFetcher } from "@/src/data/utils/fetcher";
 import { atom,  selector } from "recoil";
 import { filter } from "lodash";
-import { APP_CFG_REST_URLS } from "@/src/data/utils/rest_definitions";
+import { createGenericFetcher, fetcher } from '@/src/lib/fetcher';
+import { APP_CFG_REST_URLS } from '@/src/lib/res_definitions';
+import { mutate } from 'swr';
 
-const baseUrl = `${APP_CFG_REST_URLS.BASE_URL}/api/todos/info`;
+const baseUrl = `${APP_CFG_REST_URLS.BASE_URL}/api/todos`;
 
 interface ITodos {
     id: number;
@@ -14,18 +16,31 @@ interface ITodos {
     user_id: string;
 }
 
-const useTodoListData = () => {
-    const {data, error} = useSWR(`${baseUrl}`, simpleFetcher);
-    return {
-      data,
-      isLoading: !error && !data,
-      isError: error,
-    };
-}
+  interface Data {
+    data: ITodos[];
+    error: any;
+  }
+  
+  const useTodoListData = createGenericFetcher<Data>(baseUrl);
+  
+  const todoMutations = async (action: string, obj_data: any) => {
+    return await fetcher<ITodos>(baseUrl, action, {
+      obj_data: { ...obj_data },
+    }).then((_) => mutate(baseUrl));
+  };
 
-const todoMutations = async (path_name:string, objBody: any) => {
-    return await genericFnMutateFetcher(`${baseUrl}`, REST_VERBS.POST, {path_name, obj_data: {...objBody}});
-};
+// const useTodoListData = () => {
+//     const {data, error} = useSWR(`${baseUrl}`, simpleFetcher);
+//     return {
+//       data,
+//       isLoading: !error && !data,
+//       isError: error,
+//     };
+// }
+
+// const todoMutations = async (path_name:string, objBody: any) => {
+//     return await genericFnMutateFetcher(`${baseUrl}`, REST_VERBS.POST, {path_name, obj_data: {...objBody}});
+// };
 
 
 const todoData = atom({
