@@ -7,7 +7,6 @@ import { toggleConfirmDialog } from "@/src/components/dialog/ConfirmDialog";
 import { REST_VERBS } from "@/src/lib/res_definitions";
 import { get } from "lodash";
 
-
 function useRequestRest() {
   const {data, isLoading, isError}  = useTodoListData();
   const [confirmDialogState, setConfirmDialogState] = useRecoilState(toggleConfirmDialog);

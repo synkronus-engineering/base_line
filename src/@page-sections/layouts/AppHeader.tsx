@@ -19,13 +19,10 @@ const rightLink = {
   ml: 3,
 };
 
-
 const AppHeader = () => {
-
   const { supabase } = useSupabaseApp();
   const router = useRouter();
   const userGlobal = useRecoilValue(userGlobalSession);
-
 
   const handleSession = async () => {
     if (userGlobal && has(userGlobal, 'user')) {
@@ -45,9 +42,7 @@ const AppHeader = () => {
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters
-          sx = {{
-            minHeight: {xs: 80},
-          }}
+          sx = {{minHeight: {xs: 80},}}
         >
           <Stack direction="row" spacing={2}>
             <Link
@@ -78,19 +73,6 @@ const AppHeader = () => {
               {'New Features'}
             </Link>
           </Stack>
-
-          {/* <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
-            <Link
-              color="main"
-              variant="h6"
-              underline="none"
-              sx={{...rightLink, color: 'main' }}
-              onClick={() => handleSession()}
-            >
-              {(userGlobal && has(userGlobal, 'user')) ? 'Sign Out' : 'Sign In'}
-            </Link>
-
-          </Box> */}
           <Box sx={{ flexGrow: 1, justifyContent: 'flex-end', display: 'flex'}} data-testid="menu">
               <Button
                 sx={{ 
@@ -107,7 +89,7 @@ const AppHeader = () => {
                 </HasMounted>
               </Button>
           </Box>
-        </Toolbar>        
+        </Toolbar>   
       </Container>
     </AppBar>
   );

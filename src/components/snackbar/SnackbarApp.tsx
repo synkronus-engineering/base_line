@@ -1,6 +1,5 @@
-import { Snackbar } from "@mui/material"
+import Snackbar from '@mui/material/Snackbar';
 import { atom, useRecoilState } from "recoil"
-
 
 const toggleSnackBar = atom({
     key: 'toggleSnackBarAtom',
@@ -15,7 +14,7 @@ const  SnackbarApp = ()  => {
             message={snackbarState.msg}
             open={snackbarState.show}
             onClose={() => setSnackbarState({show:false, msg:''})}
-            autoHideDuration={2000}
+            autoHideDuration={5000}
             anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         />
     )

@@ -8,7 +8,7 @@ import type { NextRequest } from 'next/server'
     const supabase = createServerRouteClient(cookies);
     const requestUrl = new URL(req.url)
     const code = requestUrl.searchParams.get('code')
-
+    console.log('auth calback ***',code );
     if (code) 
         await supabase.auth.exchangeCodeForSession(String(code))
 
@@ -16,3 +16,5 @@ import type { NextRequest } from 'next/server'
   return NextResponse.redirect(requestUrl.origin)
 };
 
+
+// check https://github.com/supabase/supabase/blob/master/examples/auth/nextjs/app/auth/callback/route.ts

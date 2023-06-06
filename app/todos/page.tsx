@@ -4,11 +4,8 @@ import { Box, Grid } from '@mui/material';
 import TodoList from '@/src/@page-sections/todos/TodoList';
 import TodoStats from '@/src/@page-sections/todos/TodoStats';
 import Container from '@mui/material/Container';
-import { FormDialog } from '@/src/@page-sections/todos/FormDialog';
-import { SnackbarApp } from '@/src/components/snackbar/SnackbarApp';
-import { ConfirmDialog } from '@/src/components/dialog/ConfirmDialog';
 
-const Todos = () => {
+const Todos = async () => {
 
   return (
     <Container maxWidth="md" sx={{mt: 20}}>
@@ -26,17 +23,9 @@ const Todos = () => {
             <TodoStats />
           </Grid>
         </Grid>      
-
-        <FormDialog />      
-        <ConfirmDialog />      
-        <SnackbarApp />  
       </Box>     
     </Container>
   )
 }
 
 export default Todos
-
-
-//
-// 

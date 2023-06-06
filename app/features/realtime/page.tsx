@@ -1,4 +1,4 @@
-import RealtimePosts from "./realtime-posts";
+import RealtimePosts from "@/app/features/realtime/realtime-posts";
 import { createSupaServerClientComponent } from "@/src/lib/supabase";
 import { cookies } from 'next/headers';
 

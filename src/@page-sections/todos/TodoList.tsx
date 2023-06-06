@@ -11,11 +11,14 @@ import { Box, Card, CardContent, CardHeader, Grid } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { map, orderBy } from 'lodash';
+import { FormDialog } from '@/src/@page-sections/todos/FormDialog';
+import { ConfirmDialog } from '@/src/components/dialog/ConfirmDialog';
 
 const TodoList = () => {
   const { data: todos, setDialogState, handleAction } = useRequestRest();
 
   return (
+    <>
       <Card sx={{ minWidth: '100%', minHeight:'400px' }}>
         <CardHeader 
           action={
@@ -58,6 +61,9 @@ const TodoList = () => {
           </List>
         </CardContent>
       </Card>
+      <FormDialog />      
+      <ConfirmDialog />    
+    </>
   )
 }
 
