@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
-import Link from '@mui/material/Link';
+import Link from "next/link";
 import { useRouter } from 'next/navigation';
 import { useSupabaseApp } from '@/src/providers/SupabaseProvider';
 import { userGlobalSession } from '@/src/context/appContext';
@@ -45,33 +45,9 @@ const AppHeader = () => {
           sx = {{minHeight: {xs: 80},}}
         >
           <Stack direction="row" spacing={2}>
-            <Link
-              color="main"
-              variant="h6"
-              underline="none"
-              href="/"
-              sx={{...rightLink, color: 'main' }}
-            >
-              {'Home'}
-            </Link>
-            <Link
-              color="main"
-              variant="h6"
-              underline="none"
-              href="/todos"
-              sx={{...rightLink, color: 'main' }}
-            >
-              {'ToDo'}
-            </Link>
-            <Link
-              color="main"
-              variant="h6"
-              underline="none"
-              href="/features/"
-              sx={{...rightLink, color: 'main' }}
-            >
-              {'New Features'}
-            </Link>
+            <Link href="/" > {'Home'} </Link>
+            <Link href="/todos" > {'ToDos'} </Link>
+            <Link href="/features" > {'New Features'} </Link>
           </Stack>
           <Box sx={{ flexGrow: 1, justifyContent: 'flex-end', display: 'flex'}} data-testid="menu">
               <Button
