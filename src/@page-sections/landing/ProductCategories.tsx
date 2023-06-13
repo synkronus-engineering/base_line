@@ -1,8 +1,6 @@
 "use client"
-import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import ButtonBase from '@mui/material/ButtonBase';
-import Container from '@mui/material/Container';
+import { Box, ButtonBase, Container } from '@mui/material';
+import { styled} from '@mui/material/styles';
 import Typography from '@/src/components/utils/Typography';
 
 const ImageBackdrop = styled('div')(({ theme }) => ({

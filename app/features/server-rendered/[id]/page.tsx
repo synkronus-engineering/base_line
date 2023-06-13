@@ -1,32 +1,27 @@
 import { notFound } from "next/navigation";
 import { createSupaServerClientComponent } from "@/src/lib/supabase";
 import { cookies } from 'next/headers';
+import { map } from 'lodash';
 
 // do not cache this page
 export const revalidate = 0;
 
 export async function generateStaticParams() {
   const { data: posts } = await createSupaServerClientComponent(cookies).from("posts").select("id");
-
-  return posts?.map(({ id }) => ({
-    id,
-  }));
+  return map(posts, (p) => ({ id: `${p.id}` })); 
 }
 
-export default async function Post({
-  params: { id },
-}: {
-  params: { id: string };
-}) {
-  const { data: post } = await createSupaServerClientComponent(cookies)
-    .from("posts")
-    .select()
-    .match({ id })
-    .single();
+async function fetchPost(id: string) {
+  const {data, error} = await createSupaServerClientComponent(cookies)
+    .from("posts").select().match({ id }).maybeSingle(); 
+  return data as any;
+}
 
-  if (!post) {
-    notFound();
-  }
+export default async function Post({ params: { id }, }: { params: { id: string }; }) {
+  const  post = await fetchPost(id);
+
+  if (!post) notFound();
 
   return <pre>{JSON.stringify(post, null, 2)}</pre>;
 }
+

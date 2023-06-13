@@ -29,20 +29,6 @@ interface ITodos {
     }).then((_) => mutate(baseUrl));
   };
 
-// const useTodoListData = () => {
-//     const {data, error} = useSWR(`${baseUrl}`, simpleFetcher);
-//     return {
-//       data,
-//       isLoading: !error && !data,
-//       isError: error,
-//     };
-// }
-
-// const todoMutations = async (path_name:string, objBody: any) => {
-//     return await genericFnMutateFetcher(`${baseUrl}`, REST_VERBS.POST, {path_name, obj_data: {...objBody}});
-// };
-
-
 const todoData = atom({
     key: 'todoListAtom',
     default: [] as ITodos[]
@@ -69,6 +55,21 @@ export {
 export type { 
     ITodos 
 };
+
+
+
+// const useTodoListData = () => {
+//     const {data, error} = useSWR(`${baseUrl}`, simpleFetcher);
+//     return {
+//       data,
+//       isLoading: !error && !data,
+//       isError: error,
+//     };
+// }
+
+// const todoMutations = async (path_name:string, objBody: any) => {
+//     return await genericFnMutateFetcher(`${baseUrl}`, REST_VERBS.POST, {path_name, obj_data: {...objBody}});
+// };
 
 
 

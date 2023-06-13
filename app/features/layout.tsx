@@ -1,8 +1,7 @@
 "use client"
 import {  ReactNode } from 'react';
 import SideNav from '@/src/@page-sections/layouts/SideNav';
-import { Box, Grid } from '@mui/material';
-import CssBaseline from '@mui/material/CssBaseline';
+import { Box, Grid, CssBaseline } from '@mui/material';
 
 
 export default function LayoutFeatures({children}:{children:ReactNode}) {

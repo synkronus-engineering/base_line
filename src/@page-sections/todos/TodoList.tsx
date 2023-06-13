@@ -42,14 +42,14 @@ const TodoList = () => {
                   }
                   disablePadding
                 >
-                  <ListItemButton role={undefined} onClick={() => handleAction(item, 'toggle')} dense>
+                  <ListItemButton role={undefined}  dense>
                     <ListItemIcon>
                       <Checkbox
                         edge="start"
                         checked={item.is_complete}
                         tabIndex={-1}
                         disableRipple
-                        // inputProps={{ 'aria-labelledby': labelId }}
+                        inputProps={{ 'aria-labelledby': labelId }}
                         onClick={() => handleAction(item, 'is_done')}
                       />
                     </ListItemIcon>

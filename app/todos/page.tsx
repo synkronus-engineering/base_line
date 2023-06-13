@@ -1,9 +1,8 @@
 "use client"
 import * as React from 'react';
-import { Box, Grid } from '@mui/material';
+import { Box, Grid, Container } from '@mui/material';
 import TodoList from '@/src/@page-sections/todos/TodoList';
 import TodoStats from '@/src/@page-sections/todos/TodoStats';
-import Container from '@mui/material/Container';
 
 const Todos = async () => {
 

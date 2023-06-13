@@ -8,7 +8,7 @@ import MuiTheme from '@/src/styles/theme/MUITheme';
 
 export default function RootStyleEmotionRegistry({children}: {children: React.ReactNode}) {
   const [{ cache, flush }] = useState(() => {
-    const cache = createCache({ key: 'css-emotion' });
+    const cache = createCache({ key: 'css-emotion', prepend: true });
     cache.compat = true;
     const prevInsert = cache.insert;
     let inserted: string[] = [];
