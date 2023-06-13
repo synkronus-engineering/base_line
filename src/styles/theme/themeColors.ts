@@ -40,7 +40,7 @@ export const grey = {
   100: "#F6F9FC",
 };
 
-export const primary = {
+export const primaryColors = {
   100: "#FCE9EC",
   200: "#F8C7CF",
   300: "#F07D90",
@@ -123,7 +123,7 @@ export const themeColors = {
   info: blue,
   warning,
   success,
-  primary,
+  primary:primaryColors,
   secondary,
   divider: grey[200],
   background: { 

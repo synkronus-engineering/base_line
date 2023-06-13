@@ -1,5 +1,5 @@
 import { components } from "./components";
-import { primary, themeColors } from "./themeColors";
+import { primaryColors, themeColors } from "./themeColors";
 import { typography } from "./typography";
 
 export const THEMES = {
@@ -17,18 +17,20 @@ const breakpoints = {
   },
 };
 
+const paleteCfg = { ...primaryColors, light: primaryColors[100] , ...themeColors };
+
 const themesOptions = {
   [THEMES.DEFAULT]: {
     typography,
     breakpoints,
     components: { ...components },
-    palette: { primary: { ...primary, light: primary[100] }, ...themeColors },
+    palette: {...paleteCfg},
   },
   [THEMES.MY_CUSTOM_THEME]: {
     typography,
     breakpoints,
     components: { ...components },
-    palette: { primary: { ...primary, light: primary[100] }, ...themeColors },
+    palette: { ...paleteCfg },
   }
 };
 
