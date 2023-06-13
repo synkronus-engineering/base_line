@@ -4,11 +4,11 @@ import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers';
 import { get } from 'lodash';
 
-const supaRouteServerClient = createServerRouteClient(cookies);
-const todosTbl = supaRouteServerClient.from('todos');
-let result = { data: null, status: API_STATUS.BAD_REQUEST, error:null } as ResponseApiRest;  
 
  export async function GET(req:Request) {
+  let result = { data: null, status: API_STATUS.BAD_REQUEST, error:null } as ResponseApiRest;  
+  const supaRouteServerClient = createServerRouteClient(cookies);
+  const todosTbl = supaRouteServerClient.from('todos');
   try {
     result = await todosTbl.select('*').order('id', {ascending: true});
   } catch (error) {
@@ -18,6 +18,9 @@ let result = { data: null, status: API_STATUS.BAD_REQUEST, error:null } as Respo
 };
 
  export async function POST(req:Request) {
+  let result = { data: null, status: API_STATUS.BAD_REQUEST, error:null } as ResponseApiRest;  
+  const supaRouteServerClient = createServerRouteClient(cookies);
+  const todosTbl = supaRouteServerClient.from('todos');
   const { obj_data } = await req.json();
   const { data: { user } } = await supaRouteServerClient.auth.getUser();
   try {
@@ -29,6 +32,9 @@ let result = { data: null, status: API_STATUS.BAD_REQUEST, error:null } as Respo
 };
 
  export async function PUT(req:Request) {
+  let result = { data: null, status: API_STATUS.BAD_REQUEST, error:null } as ResponseApiRest;  
+  const supaRouteServerClient = createServerRouteClient(cookies);
+  const todosTbl = supaRouteServerClient.from('todos');
   const { obj_data } = await req.json();
   try {
     result = await todosTbl.update({...obj_data }).eq('id', (obj_data?.id || 0)).select();
@@ -39,6 +45,9 @@ let result = { data: null, status: API_STATUS.BAD_REQUEST, error:null } as Respo
 };
 
  export async function DELETE(req:Request) {
+  let result = { data: null, status: API_STATUS.BAD_REQUEST, error:null } as ResponseApiRest;  
+  const supaRouteServerClient = createServerRouteClient(cookies);
+  const todosTbl = supaRouteServerClient.from('todos');
   const { obj_data } = await req.json();
   try {
     result = await todosTbl.delete().eq('id', (obj_data?.id || 0)).select('*');
