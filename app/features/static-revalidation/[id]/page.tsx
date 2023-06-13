@@ -9,7 +9,6 @@ export const revalidate = 60;
 export async function generateStaticParams() {
   const { data: posts } = await createSupaServerClientComponent(cookies).from("posts").select("id");
   return map(posts, (p) => ({ id: `${p.id}` })); 
-  
 }
 
 async function fetchPost(id: string) {
