@@ -5,57 +5,135 @@ import { cookies } from 'next/headers';
 import { get } from 'lodash';
 
 
- export async function GET(req:Request) {
-  let result = { data: null, status: API_STATUS.BAD_REQUEST, error:null } as ResponseApiRest;  
-  const supaRouteServerClient = createServerRouteClient(cookies);
-  const todosTbl = supaRouteServerClient.from('todos');
-  try {
-    result = await todosTbl.select('*').order('id', {ascending: true});
-  } catch (error) {
-    result =  {data: null, status: API_STATUS.SERVER_ERROR, error: get(error,'message', 'server error')}
-  }
-  return NextResponse.json(result);
-};
+const supaRouteServerClient = createServerRouteClient(cookies);
+const todosTbl = supaRouteServerClient.from('todos');
 
- export async function POST(req:Request) {
-  let result = { data: null, status: API_STATUS.BAD_REQUEST, error:null } as ResponseApiRest;  
-  const supaRouteServerClient = createServerRouteClient(cookies);
-  const todosTbl = supaRouteServerClient.from('todos');
-  const { obj_data } = await req.json();
-  const { data: { user } } = await supaRouteServerClient.auth.getUser();
-  try {
-    result = await todosTbl.insert({ ...obj_data, user_id: user?.id }).select();
-  } catch (error) {
-    result =  {data: null, status: API_STATUS.SERVER_ERROR, error: get(error,'message', 'server error')}
-  }
-  return NextResponse.json(result);
-};
+function handleError(error: any): ResponseApiRest {
+  return {
+    data: null,
+    status: API_STATUS.SERVER_ERROR,
+    error: get(error, 'message', 'server error'),
+  };
+}
 
- export async function PUT(req:Request) {
-  let result = { data: null, status: API_STATUS.BAD_REQUEST, error:null } as ResponseApiRest;  
-  const supaRouteServerClient = createServerRouteClient(cookies);
-  const todosTbl = supaRouteServerClient.from('todos');
-  const { obj_data } = await req.json();
+export async function GET(req: Request) {
   try {
-    result = await todosTbl.update({...obj_data }).eq('id', (obj_data?.id || 0)).select();
+    const data = await todosTbl.select('*').order('id', { ascending: true });
+    return NextResponse.json({
+      data,
+      status: API_STATUS.OK,
+      error: null,
+    });
   } catch (error) {
-    result =  {data: null, status: API_STATUS.SERVER_ERROR, error: get(error,'message', 'server error')}
+    return NextResponse.json(handleError(error));
   }
-  return NextResponse.json(result);
-};
+}
 
- export async function DELETE(req:Request) {
-  let result = { data: null, status: API_STATUS.BAD_REQUEST, error:null } as ResponseApiRest;  
-  const supaRouteServerClient = createServerRouteClient(cookies);
-  const todosTbl = supaRouteServerClient.from('todos');
-  const { obj_data } = await req.json();
+export async function POST(req: Request) {
   try {
-    result = await todosTbl.delete().eq('id', (obj_data?.id || 0)).select('*');
+    const { obj_data } = await req.json();
+    const { data: { user } } = await supaRouteServerClient.auth.getUser();
+    const newData = { ...obj_data, user_id: user?.id };
+    const data = await todosTbl.insert(newData).select();
+    return NextResponse.json({
+      data,
+      status: API_STATUS.OK,
+      error: null,
+    });
   } catch (error) {
-    result =  {data: null, status: API_STATUS.SERVER_ERROR, error: get(error,'message', 'server error')}
+    return NextResponse.json(handleError(error));
   }
-  return NextResponse.json(result);
-};
+}
+
+export async function PUT(req: Request) {
+  try {
+    const { obj_data } = await req.json();
+    const { id } = obj_data;
+    const data = await todosTbl.update(obj_data).eq('id', id || 0).select();
+    return NextResponse.json({
+      data,
+      status: API_STATUS.OK,
+      error: null,
+    });
+  } catch (error) {
+    return NextResponse.json(handleError(error));
+  }
+}
+
+export async function DELETE(req: Request) {
+  try {
+    const { obj_data } = await req.json();
+    const { id } = obj_data;
+    const data = await todosTbl.delete().eq('id', id || 0).select('*');
+    return NextResponse.json({
+      data,
+      status: API_STATUS.OK,
+      error: null,
+    });
+  } catch (error) {
+    return NextResponse.json(handleError(error));
+  }
+}
+
+
+// import { API_STATUS, ResponseApiRest } from '@/src/data/utils/rest_definitions';
+// import { createServerRouteClient } from '@/src/lib/supabase'
+// import { NextResponse } from 'next/server'
+// import { cookies } from 'next/headers';
+// import { get } from 'lodash';
+
+
+//  export async function GET(req:Request) {
+//   let result = { data: null, status: API_STATUS.BAD_REQUEST, error:null } as ResponseApiRest;  
+//   const supaRouteServerClient = createServerRouteClient(cookies);
+//   const todosTbl = supaRouteServerClient.from('todos');
+//   try {
+//     result = await todosTbl.select('*').order('id', {ascending: true});
+//   } catch (error) {
+//     result =  {data: null, status: API_STATUS.SERVER_ERROR, error: get(error,'message', 'server error')}
+//   }
+//   return NextResponse.json(result);
+// };
+
+//  export async function POST(req:Request) {
+//   let result = { data: null, status: API_STATUS.BAD_REQUEST, error:null } as ResponseApiRest;  
+//   const supaRouteServerClient = createServerRouteClient(cookies);
+//   const todosTbl = supaRouteServerClient.from('todos');
+//   const { obj_data } = await req.json();
+//   const { data: { user } } = await supaRouteServerClient.auth.getUser();
+//   try {
+//     result = await todosTbl.insert({ ...obj_data, user_id: user?.id }).select();
+//   } catch (error) {
+//     result =  {data: null, status: API_STATUS.SERVER_ERROR, error: get(error,'message', 'server error')}
+//   }
+//   return NextResponse.json(result);
+// };
+
+//  export async function PUT(req:Request) {
+//   let result = { data: null, status: API_STATUS.BAD_REQUEST, error:null } as ResponseApiRest;  
+//   const supaRouteServerClient = createServerRouteClient(cookies);
+//   const todosTbl = supaRouteServerClient.from('todos');
+//   const { obj_data } = await req.json();
+//   try {
+//     result = await todosTbl.update({...obj_data }).eq('id', (obj_data?.id || 0)).select();
+//   } catch (error) {
+//     result =  {data: null, status: API_STATUS.SERVER_ERROR, error: get(error,'message', 'server error')}
+//   }
+//   return NextResponse.json(result);
+// };
+
+//  export async function DELETE(req:Request) {
+//   let result = { data: null, status: API_STATUS.BAD_REQUEST, error:null } as ResponseApiRest;  
+//   const supaRouteServerClient = createServerRouteClient(cookies);
+//   const todosTbl = supaRouteServerClient.from('todos');
+//   const { obj_data } = await req.json();
+//   try {
+//     result = await todosTbl.delete().eq('id', (obj_data?.id || 0)).select('*');
+//   } catch (error) {
+//     result =  {data: null, status: API_STATUS.SERVER_ERROR, error: get(error,'message', 'server error')}
+//   }
+//   return NextResponse.json(result);
+// };
 
 
 // import { createServerClient } from '@/src/lib/supabase'
